@@ -17,7 +17,7 @@
 
         <flux:table>
             <flux:table.columns>
-                <flux:table.column class="px-8 py-4 pl-10">{{ __('Name') }}</flux:table.column>
+                <flux:table.column class="pr-8 pl-10 py-4">{{ __('Name') }}</flux:table.column>
                 <flux:table.column class="px-8 py-4">{{ __('Email') }}</flux:table.column>
                 <flux:table.column class="px-8 py-4">{{ __('Created') }}</flux:table.column>
                 <flux:table.column class="px-8 py-4">{{ __('Actions') }}</flux:table.column>
