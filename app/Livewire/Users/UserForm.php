@@ -6,9 +6,11 @@ use App\Models\User;
 use Flux\Flux;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
+#[Layout('layouts.app.sidebar')]
 #[Title('User Form')]
 class UserForm extends Component
 {

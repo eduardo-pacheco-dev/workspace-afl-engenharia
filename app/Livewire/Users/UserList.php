@@ -4,10 +4,12 @@ namespace App\Livewire\Users;
 
 use App\Models\User;
 use Flux\Flux;
+use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+#[Layout('layouts.app.sidebar')]
 #[Title('Users')]
 class UserList extends Component
 {
