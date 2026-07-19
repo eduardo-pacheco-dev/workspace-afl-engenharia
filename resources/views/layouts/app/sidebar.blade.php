@@ -19,8 +19,8 @@
                     [
                         'name' => 'Dashboard',
                         'items' => [
-                            ['name' => 'Overview', 'icon' => 'chart-bar', 'href' => route('dashboard'), 'route' => 'dashboard'],
-                            ['name' => 'Analytics', 'icon' => 'chart-line', 'href' => '#', 'route' => ''],
+                            ['name' => 'Overview', 'icon' => 'home', 'href' => route('dashboard'), 'route' => 'dashboard'],
+                            ['name' => 'Analytics', 'icon' => 'chart-bar', 'href' => '#', 'route' => ''],
                         ],
                     ],
                 ]" />
