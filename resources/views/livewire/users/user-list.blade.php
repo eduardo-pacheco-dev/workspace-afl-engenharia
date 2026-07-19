@@ -27,7 +27,7 @@
                 @forelse ($users as $user)
                     <flux:table.row>
                         <flux:table.cell class="px-8 py-5">
-                            <div class="flex items-center gap-4">
+                            <div class="flex items-center gap-4 pl-2">
                                 <flux:avatar :name="$user->name" :initials="$user->initials()" />
                                 <span class="font-medium">{{ $user->name }}</span>
                             </div>
