@@ -26,15 +26,15 @@
             <flux:table.rows>
                 @forelse ($users as $user)
                     <flux:table.row>
-                        <flux:table.cell class="px-6 py-4">
-                            <div class="flex items-center gap-3">
+                        <flux:table.cell class="px-8 py-5">
+                            <div class="flex items-center gap-4">
                                 <flux:avatar :name="$user->name" :initials="$user->initials()" />
                                 <span class="font-medium">{{ $user->name }}</span>
                             </div>
                         </flux:table.cell>
-                        <flux:table.cell class="px-6 py-4">{{ $user->email }}</flux:table.cell>
-                        <flux:table.cell class="px-6 py-4">{{ $user->created_at->diffForHumans() }}</flux:table.cell>
-                        <flux:table.cell class="px-6 py-4 text-right">
+                        <flux:table.cell class="px-8 py-5">{{ $user->email }}</flux:table.cell>
+                        <flux:table.cell class="px-8 py-5">{{ $user->created_at->diffForHumans() }}</flux:table.cell>
+                        <flux:table.cell class="px-8 py-5 text-right">
                             <div class="flex items-center justify-end gap-1">
                                 <flux:button icon="pencil-square" variant="ghost" size="sm" href="{{ route('users.edit', $user->id) }}" wire:navigate aria-label="{{ __('Edit') }}" />
                                 <flux:button icon="trash" variant="ghost" size="sm" wire:click="delete({{ $user->id }})" aria-label="{{ __('Delete') }}" />
