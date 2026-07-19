@@ -35,13 +35,9 @@
                         <flux:table.cell class="px-6 py-4">{{ $user->email }}</flux:table.cell>
                         <flux:table.cell class="px-6 py-4">{{ $user->created_at->diffForHumans() }}</flux:table.cell>
                         <flux:table.cell class="px-6 py-4 text-right">
-                            <div class="flex items-center justify-end gap-2">
-                                <flux:button variant="ghost" size="sm" href="{{ route('users.edit', $user->id) }}" wire:navigate>
-                                    {{ __('Edit') }}
-                                </flux:button>
-                                <flux:button variant="ghost" size="sm" wire:click="delete({{ $user->id }})">
-                                    {{ __('Delete') }}
-                                </flux:button>
+                            <div class="flex items-center justify-end gap-1">
+                                <flux:button icon="pencil-square" variant="ghost" size="sm" href="{{ route('users.edit', $user->id) }}" wire:navigate aria-label="{{ __('Edit') }}" />
+                                <flux:button icon="trash" variant="ghost" size="sm" wire:click="delete({{ $user->id }})" aria-label="{{ __('Delete') }}" />
                             </div>
                         </flux:table.cell>
                     </flux:table.row>
