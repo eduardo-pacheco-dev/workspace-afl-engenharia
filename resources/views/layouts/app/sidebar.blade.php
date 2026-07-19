@@ -14,6 +14,16 @@
                 <flux:sidebar.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>
                     {{ __('Dashboard') }}
                 </flux:sidebar.item>
+
+                <x-module-selector :modules="[
+                    [
+                        'name' => 'Dashboard',
+                        'items' => [
+                            ['name' => 'Overview', 'icon' => 'chart-bar', 'href' => route('dashboard'), 'route' => 'dashboard'],
+                            ['name' => 'Analytics', 'icon' => 'chart-line', 'href' => '#', 'route' => ''],
+                        ],
+                    ],
+                ]" />
             </flux:sidebar.nav>
 
             <flux:spacer />
