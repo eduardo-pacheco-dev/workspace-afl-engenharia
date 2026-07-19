@@ -23,6 +23,12 @@
                             ['name' => 'Analytics', 'icon' => 'chart-bar', 'href' => '#', 'route' => ''],
                         ],
                     ],
+                    [
+                        'name' => 'Management',
+                        'items' => [
+                            ['name' => 'Users', 'icon' => 'users', 'href' => route('users.index'), 'route' => 'users.*'],
+                        ],
+                    ],
                 ]" />
             </flux:sidebar.nav>
 
