@@ -39,7 +39,7 @@
 
         <x-mobile-user-menu />
 
-        <div class="w-full flex-1 lg:ps-72">
+        <div class="w-full flex-1">
             {{ $slot }}
         </div>
 
