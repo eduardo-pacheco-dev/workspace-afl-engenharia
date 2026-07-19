@@ -39,7 +39,9 @@
 
         <x-mobile-user-menu />
 
-        {{ $slot }}
+        <div class="lg:ps-72">
+            {{ $slot }}
+        </div>
 
         @persist('toast')
             <flux:toast.group>
