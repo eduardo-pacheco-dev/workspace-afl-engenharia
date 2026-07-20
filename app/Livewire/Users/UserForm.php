@@ -43,7 +43,9 @@ class UserForm extends Component
 
         if ($this->userId) {
             $user = User::findOrFail($this->userId);
-            $user->fill($validated);
+
+            $fillData = collect($validated)->except('password')->toArray();
+            $user->fill($fillData);
 
             if (! empty($validated['password'])) {
                 $user->password = Hash::make($validated['password']);
