@@ -12,7 +12,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('force-password-change');
 });
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
 });
 

@@ -172,7 +172,7 @@ return [
         /* @end-chisel-registration */
         Features::resetPasswords(),
         /* @chisel-email-verification */
-        Features::emailVerification(),
+        // Features::emailVerification(),
         /* @end-chisel-email-verification */
         /* @chisel-2fa */
         Features::twoFactorAuthentication([
