@@ -89,9 +89,10 @@ class TodoManagementTest extends TestCase
 
         Livewire::actingAs($user)
             ->test(TodoList::class)
-            ->call('delete', $todo->id);
+            ->call('confirmDelete', $todo->id)
+            ->call('delete');
 
-        $this->assertDatabaseMissing('todos', ['id' => $todo->id]);
+        $this->assertSoftDeleted('todos', ['id' => $todo->id]);
     }
 
     public function test_user_cannot_toggle_other_users_todo(): void

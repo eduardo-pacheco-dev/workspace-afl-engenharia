@@ -18,6 +18,12 @@ class TodoList extends Component
 
     public string $search = '';
 
+    public string $statusFilter = 'all';
+
+    public bool $showDeleteModal = false;
+
+    public ?int $todoToDeleteId = null;
+
     public function render()
     {
         return view('livewire.todos.todo-list', [
@@ -25,6 +31,9 @@ class TodoList extends Component
                 ->forUser(auth()->id())
                 ->with(['subtasks', 'attachments'])
                 ->where('title', 'like', "%{$this->search}%")
+                ->when($this->statusFilter === 'completed', fn ($query) => $query->where('completed', true))
+                ->when($this->statusFilter === 'pending', fn ($query) => $query->where('completed', false))
+                ->when($this->statusFilter === 'overdue', fn ($query) => $query->where('completed', false)->where('due_date', '<', now()))
                 ->orderByDesc('created_at')
                 ->paginate(10),
         ]);
@@ -50,13 +59,29 @@ class TodoList extends Component
         $subtask->update(['completed' => ! $subtask->completed]);
     }
 
-    public function delete(Todo $todo): void
+    public function confirmDelete(int $id): void
     {
-        if ($todo->user_id !== auth()->id()) {
+        $this->todoToDeleteId = $id;
+        $this->showDeleteModal = true;
+    }
+
+    public function delete(): void
+    {
+        $todo = Todo::find($this->todoToDeleteId);
+
+        if (! $todo || $todo->user_id !== auth()->id()) {
             return;
         }
 
         $todo->delete();
+        $this->showDeleteModal = false;
+        $this->todoToDeleteId = null;
         Flux::toast(variant: 'success', text: __('Todo deleted successfully.'));
+    }
+
+    public function cancelDelete(): void
+    {
+        $this->showDeleteModal = false;
+        $this->todoToDeleteId = null;
     }
 }

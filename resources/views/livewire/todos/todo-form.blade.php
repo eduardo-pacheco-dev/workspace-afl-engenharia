@@ -39,6 +39,13 @@
                     @endforeach
                 </flux:select>
 
+                <flux:select wire:model="classification" :label="__('Classification')">
+                    <flux:select.option value="">{{ __('None') }}</flux:select.option>
+                    @foreach ($classificationTypes as $value => $label)
+                        <flux:select.option :value="$value">{{ $label }}</flux:select.option>
+                    @endforeach
+                </flux:select>
+
                 {{-- Subtasks --}}
                 <div class="space-y-3">
                     <flux:heading size="sm">{{ __('Subtasks') }}</flux:heading>

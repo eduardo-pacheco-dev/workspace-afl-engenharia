@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 
 /**
@@ -26,9 +27,9 @@ use Illuminate\Support\Carbon;
 class Todo extends Model
 {
     /** @use HasFactory<TodoFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = ['user_id', 'title', 'description', 'completed', 'due_date', 'reminder_date', 'repeat_type', 'notes'];
+    protected $fillable = ['user_id', 'title', 'description', 'completed', 'due_date', 'reminder_date', 'repeat_type', 'notes', 'classification'];
 
     protected function casts(): array
     {
@@ -66,6 +67,15 @@ class Todo extends Model
             'weekly' => 'Weekly',
             'monthly' => 'Monthly',
             'yearly' => 'Yearly',
+        ];
+    }
+
+    public static function classificationTypes(): array
+    {
+        return [
+            'low' => 'Baixa',
+            'medium' => 'Média',
+            'high' => 'Alta',
         ];
     }
 }
