@@ -1,4 +1,4 @@
-<div class="flex min-h-[80vh] items-center justify-center" x-data="passwordStrength()" data-translations="{{ json_encode(['ep' => __('Enter a password'), 'vw' => __('Very weak'), 'wk' => __('Weak'), 'fa' => __('Fair'), 'st' => __('Strong'), 'vs' => __('Very strong'), 'mc' => __('At least 8 characters'), 'up' => __('One uppercase letter'), 'lo' => __('One lowercase letter'), 'nu' => __('One number'), 'sp' => __('One special character (!@#$%^&*)')]) }}">
+<div class="flex h-full items-center justify-center" x-data="passwordStrength()" data-translations="{{ json_encode(['ep' => __('Enter a password'), 'vw' => __('Very weak'), 'wk' => __('Weak'), 'fa' => __('Fair'), 'st' => __('Strong'), 'vs' => __('Very strong'), 'mc' => __('At least 8 characters'), 'up' => __('One uppercase letter'), 'lo' => __('One lowercase letter'), 'nu' => __('One number'), 'sp' => __('One special character (!@#$%^&*)')]) }}">
     <div class="w-full max-w-md">
         <div class="rounded-xl border border-neutral-200 bg-white p-8 shadow-lg dark:border-neutral-700 dark:bg-zinc-900">
             <div class="mb-6 text-center">
