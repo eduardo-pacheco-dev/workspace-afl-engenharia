@@ -60,9 +60,13 @@
             :placeholder="__('Confirm your new password')"
         />
 
-        <flux:button variant="primary" type="submit" class="w-full" x-bind:disabled="level < 3">
+        <button
+            type="submit"
+            class="w-full inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition"
+            x-bind:disabled="level < 3"
+        >
             {{ __('Change Password and Continue') }}
-        </flux:button>
+        </button>
     </form>
 </div>
 
