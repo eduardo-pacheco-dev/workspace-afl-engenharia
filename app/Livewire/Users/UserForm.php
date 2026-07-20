@@ -53,6 +53,7 @@ class UserForm extends Component
             Flux::toast(variant: 'success', text: __('User updated successfully.'));
         } else {
             $validated['password'] = Hash::make($validated['password']);
+            $validated['must_change_password'] = true;
 
             if (! $this->sendWelcomeEmail) {
                 $validated['email_verified_at'] = now();
