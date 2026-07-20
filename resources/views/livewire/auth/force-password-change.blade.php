@@ -55,7 +55,7 @@
                         required
                         autocomplete="new-password"
                         :placeholder="__('Enter your new password')"
-                        @input="evaluate($event.target.value)"
+                        x-on:input="evaluate($event.target.value)"
                     />
 
                     <div class="mt-3 space-y-2">
@@ -69,7 +69,7 @@
                         </div>
 
                         <flux:text class="text-xs"
-                                   :class="{
+                                   x-bind:class="{
                                        'text-red-500': level === 1,
                                        'text-amber-500': level === 2,
                                        'text-yellow-600': level === 3,
@@ -82,7 +82,7 @@
                     <div class="mt-3 space-y-1">
                         <template x-for="(rule, index) in rules" :key="index">
                             <div class="flex items-center gap-2 text-xs" :class="rule.met ? 'text-green-600' : 'text-neutral-400'">
-                                <flux:icon :name="rule.met ? 'check-circle' : 'x-circle'" class="h-3.5 w-3.5 shrink-0" />
+                                <flux:icon x-bind:name="rule.met ? 'check-circle' : 'x-circle'" class="h-3.5 w-3.5 shrink-0" />
                                 <span x-text="rule.label"></span>
                             </div>
                         </template>
@@ -98,7 +98,7 @@
                     :placeholder="__('Confirm your new password')"
                 />
 
-                <flux:button variant="primary" type="submit" class="w-full" :disabled="level < 3">
+                <flux:button variant="primary" type="submit" class="w-full" x-bind:disabled="level < 3">
                     {{ __('Change Password and Continue') }}
                 </flux:button>
             </form>
