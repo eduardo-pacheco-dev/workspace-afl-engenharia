@@ -1,4 +1,4 @@
-<div class="flex min-h-[80vh] items-center justify-center" x-data="passwordStrength()">
+<div class="flex min-h-[80vh] items-center justify-center" x-data="passwordStrength()" data-translations="{{ json_encode(['ep' => __('Enter a password'), 'vw' => __('Very weak'), 'wk' => __('Weak'), 'fa' => __('Fair'), 'st' => __('Strong'), 'vs' => __('Very strong'), 'mc' => __('At least 8 characters'), 'up' => __('One uppercase letter'), 'lo' => __('One lowercase letter'), 'nu' => __('One number'), 'sp' => __('One special character (!@#$%^&*)')]) }}">
     <div class="w-full max-w-md">
         <div class="rounded-xl border border-neutral-200 bg-white p-8 shadow-lg dark:border-neutral-700 dark:bg-zinc-900">
             <div class="mb-6 text-center">
@@ -69,35 +69,20 @@
         </div>
     </div>
 
-    <script type="application/json" id="strength-translations">
-        @json([
-            'enterPassword' => __('Enter a password'),
-            'veryWeak' => __('Very weak'),
-            'weak' => __('Weak'),
-            'fair' => __('Fair'),
-            'strong' => __('Strong'),
-            'veryStrong' => __('Very strong'),
-            'minChars' => __('At least 8 characters'),
-            'uppercase' => __('One uppercase letter'),
-            'lowercase' => __('One lowercase letter'),
-            'number' => __('One number'),
-            'special' => __('One special character (!@#$%^&*)'),
-        ])
-    </script>
-
     <script>
         document.addEventListener('alpine:init', function() {
             Alpine.data('passwordStrength', function() {
-                var t = JSON.parse(document.getElementById('strength-translations').textContent);
+                var el = document.querySelector('[data-translations]');
+                var t = JSON.parse(el.dataset.translations);
                 return {
                     level: 0,
-                    label: t.enterPassword,
+                    label: t.ep,
                     rules: [
-                        { label: t.minChars, met: false },
-                        { label: t.uppercase, met: false },
-                        { label: t.lowercase, met: false },
-                        { label: t.number, met: false },
-                        { label: t.special, met: false },
+                        { label: t.mc, met: false },
+                        { label: t.up, met: false },
+                        { label: t.lo, met: false },
+                        { label: t.nu, met: false },
+                        { label: t.sp, met: false },
                     ],
                     evaluate: function(password) {
                         this.rules[0].met = password.length >= 8;
@@ -110,19 +95,19 @@
 
                         if (password.length === 0) {
                             this.level = 0;
-                            this.label = t.enterPassword;
+                            this.label = t.ep;
                         } else if (score <= 1) {
                             this.level = 1;
-                            this.label = t.veryWeak;
+                            this.label = t.vw;
                         } else if (score === 2) {
                             this.level = 2;
-                            this.label = t.weak;
+                            this.label = t.wk;
                         } else if (score === 3) {
                             this.level = 3;
-                            this.label = t.fair;
+                            this.label = t.fa;
                         } else {
                             this.level = 4;
-                            this.label = score === 4 ? t.strong : t.veryStrong;
+                            this.label = score === 4 ? t.st : t.vs;
                         }
                     }
                 };
