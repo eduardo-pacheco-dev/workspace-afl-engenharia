@@ -16,22 +16,18 @@ class ForcePasswordChange extends Component
     public string $password = '';
     public string $password_confirmation = '';
 
-    public function save(): void
+    public function save(): mixed
     {
         $validated = $this->validate([
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
         $user = Auth::user();
-        $user->password = Hash::make($validated['password']);
-        $user->must_change_password = false;
-        $user->save();
-
-        Auth::login($user);
+        $user->forceFill(['password' => Hash::make($validated['password']), 'must_change_password' => false])->save();
 
         Flux::toast(variant: 'success', text: __('Password changed successfully.'));
 
-        $this->redirect(route('dashboard'), navigate: true);
+        return redirect()->route('dashboard');
     }
 
     public function render()
