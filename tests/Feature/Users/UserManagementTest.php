@@ -6,6 +6,7 @@ use App\Livewire\Users\UserForm;
 use App\Livewire\Users\UserList;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -96,7 +97,6 @@ class UserManagementTest extends TestCase
         $this->assertDatabaseHas('users', [
             'name' => 'New User',
             'email' => 'new@example.com',
-            'must_change_password' => true,
         ]);
     }
 
@@ -207,7 +207,7 @@ class UserManagementTest extends TestCase
     public function test_user_password_can_be_changed_on_edit(): void
     {
         $admin = User::factory()->create();
-        $target = User::factory()->create(['password' => \Illuminate\Support\Facades\Hash::make('old-password')]);
+        $target = User::factory()->create(['password' => Hash::make('old-password')]);
 
         Livewire::actingAs($admin)
             ->test(UserForm::class, ['id' => $target->id])
@@ -217,14 +217,14 @@ class UserManagementTest extends TestCase
             ->call('save');
 
         $this->assertTrue(
-            \Illuminate\Support\Facades\Hash::check('new-password123', $target->refresh()->password)
+            Hash::check('new-password123', $target->refresh()->password)
         );
     }
 
     public function test_user_password_is_not_changed_when_null_on_edit(): void
     {
         $admin = User::factory()->create();
-        $originalPassword = \Illuminate\Support\Facades\Hash::make('old-password');
+        $originalPassword = Hash::make('old-password');
         $target = User::factory()->create(['password' => $originalPassword]);
 
         Livewire::actingAs($admin)
@@ -235,42 +235,7 @@ class UserManagementTest extends TestCase
 
         $refreshed = $target->refresh();
         $this->assertTrue(
-            \Illuminate\Support\Facades\Hash::check('old-password', $refreshed->password)
+            Hash::check('old-password', $refreshed->password)
         );
-    }
-
-    public function test_new_user_must_change_password_is_true(): void
-    {
-        $admin = User::factory()->create();
-
-        Livewire::actingAs($admin)
-            ->test(UserForm::class)
-            ->set('name', 'New User')
-            ->set('email', 'new@example.com')
-            ->set('password', 'password123')
-            ->call('save');
-
-        $user = User::where('email', 'new@example.com')->first();
-        $this->assertDatabaseHas('users', [
-            'id' => $user->id,
-            'must_change_password' => true,
-        ]);
-    }
-
-    public function test_edit_user_does_not_set_must_change_password(): void
-    {
-        $admin = User::factory()->create();
-        $target = User::factory()->create(['must_change_password' => false]);
-
-        Livewire::actingAs($admin)
-            ->test(UserForm::class, ['id' => $target->id])
-            ->set('name', 'Updated Name')
-            ->set('email', $target->email)
-            ->call('save');
-
-        $this->assertDatabaseHas('users', [
-            'id' => $target->id,
-            'must_change_password' => false,
-        ]);
     }
 }

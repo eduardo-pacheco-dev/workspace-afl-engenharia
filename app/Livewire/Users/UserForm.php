@@ -5,7 +5,6 @@ namespace App\Livewire\Users;
 use App\Models\User;
 use Flux\Flux;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -15,9 +14,13 @@ use Livewire\Component;
 class UserForm extends Component
 {
     public ?int $userId = null;
+
     public string $name = '';
+
     public string $email = '';
+
     public string $password = '';
+
     public bool $sendWelcomeEmail = true;
 
     public function mount(?int $id = null): void
@@ -35,7 +38,7 @@ class UserForm extends Component
     {
         $validated = $this->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $this->userId],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->userId],
             'password' => $this->userId
                 ? ['nullable', 'string', 'min:8']
                 : ['required', 'string', 'min:8'],
@@ -55,7 +58,6 @@ class UserForm extends Component
             Flux::toast(variant: 'success', text: __('User updated successfully.'));
         } else {
             $validated['password'] = Hash::make($validated['password']);
-            $validated['must_change_password'] = true;
 
             if (! $this->sendWelcomeEmail) {
                 $validated['email_verified_at'] = now();

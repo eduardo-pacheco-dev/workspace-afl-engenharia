@@ -32,6 +32,7 @@ class UserList extends Component
     {
         if ($user->id === auth()->id()) {
             Flux::toast(variant: 'error', text: __('You cannot delete your own account.'));
+
             return;
         }
 
