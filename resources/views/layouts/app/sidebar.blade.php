@@ -3,11 +3,11 @@
     <head>
         @include('partials.head')
     </head>
-    <body class="min-h-screen bg-white dark:bg-zinc-800">
-        <flux:sidebar sticky collapsible class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
+    <body class="flex min-h-screen bg-white dark:bg-zinc-800">
+        <flux:sidebar sticky class="border-e border-zinc-200 bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900">
             <flux:sidebar.header>
                 <x-app-logo :sidebar="true" href="{{ route('dashboard') }}" wire:navigate />
-                <flux:sidebar.collapse />
+                <flux:sidebar.collapse class="lg:hidden" />
             </flux:sidebar.header>
 
             <flux:sidebar.nav>
@@ -23,6 +23,12 @@
                             ['name' => 'Analytics', 'icon' => 'chart-bar', 'href' => '#', 'route' => ''],
                         ],
                     ],
+                    [
+                        'name' => 'Management',
+                        'items' => [
+                            ['name' => 'Users', 'icon' => 'users', 'href' => route('users.index'), 'route' => 'users.*'],
+                        ],
+                    ],
                 ]" />
             </flux:sidebar.nav>
 
@@ -33,7 +39,9 @@
 
         <x-mobile-user-menu />
 
-        {{ $slot }}
+        <div class="w-full flex-1">
+            {{ $slot }}
+        </div>
 
         @persist('toast')
             <flux:toast.group>
