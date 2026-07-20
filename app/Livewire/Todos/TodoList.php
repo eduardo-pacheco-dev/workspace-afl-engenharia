@@ -18,6 +18,8 @@ class TodoList extends Component
 
     public string $search = '';
 
+    public string $statusFilter = 'all';
+
     public bool $showDeleteModal = false;
 
     public ?int $todoToDeleteId = null;
@@ -29,6 +31,9 @@ class TodoList extends Component
                 ->forUser(auth()->id())
                 ->with(['subtasks', 'attachments'])
                 ->where('title', 'like', "%{$this->search}%")
+                ->when($this->statusFilter === 'completed', fn ($query) => $query->where('completed', true))
+                ->when($this->statusFilter === 'pending', fn ($query) => $query->where('completed', false))
+                ->when($this->statusFilter === 'overdue', fn ($query) => $query->where('completed', false)->where('due_date', '<', now()))
                 ->orderByDesc('created_at')
                 ->paginate(10),
         ]);

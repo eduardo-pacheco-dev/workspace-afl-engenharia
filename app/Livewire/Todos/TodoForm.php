@@ -33,6 +33,8 @@ class TodoForm extends Component
 
     public string $notes = '';
 
+    public ?string $classification = null;
+
     /** @var array<int, array{title: string, completed: bool}> */
     public array $subtasks = [];
 
@@ -59,6 +61,7 @@ class TodoForm extends Component
             $this->reminder_date = $todo->reminder_date?->format('Y-m-d\TH:i');
             $this->repeat_type = $todo->repeat_type;
             $this->notes = $todo->notes ?? '';
+            $this->classification = $todo->classification;
             $this->subtasks = $todo->subtasks->map(fn ($s) => [
                 'id' => $s->id,
                 'title' => $s->title,
@@ -113,6 +116,7 @@ class TodoForm extends Component
             'reminder_date' => ['nullable', 'date'],
             'repeat_type' => ['nullable', 'in:daily,weekly,monthly,yearly'],
             'notes' => ['nullable', 'string', 'max:5000'],
+            'classification' => ['nullable', 'in:low,medium,high'],
             'newAttachments.*' => ['file', 'max:10240'],
         ]);
 
@@ -173,6 +177,7 @@ class TodoForm extends Component
     {
         return view('livewire.todos.todo-form', [
             'repeatTypes' => Todo::repeatTypes(),
+            'classificationTypes' => Todo::classificationTypes(),
         ]);
     }
 }
