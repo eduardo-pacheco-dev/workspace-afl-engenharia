@@ -31,7 +31,7 @@ class ForcePasswordChange extends Component
 
         Flux::toast(variant: 'success', text: __('Password changed successfully.'));
 
-        $this->redirectRoute('dashboard');
+        return $this->redirect(route('dashboard'), navigate: true);
     }
 
     public function render()
