@@ -95,7 +95,7 @@
                         <flux:table.cell class="px-8 py-5">
                             <div class="flex items-center gap-2">
                                 <flux:button icon="pencil-square" variant="ghost" size="sm" href="{{ route('todos.edit', $todo->id) }}" wire:navigate aria-label="{{ __('Edit') }}" />
-                                <flux:button icon="trash" variant="ghost" size="sm" wire:click="delete({{ $todo->id }})" aria-label="{{ __('Delete') }}" />
+                                <flux:button icon="trash" variant="ghost" size="sm" wire:click="confirmDelete({{ $todo->id }})" aria-label="{{ __('Delete') }}" />
                             </div>
                         </flux:table.row>
                     </flux:table.row>
@@ -113,4 +113,23 @@
             {{ $todos->links() }}
         </div>
     </div>
+
+    <flux:modal name="confirm-todo-deletion" wire:model="showDeleteModal" focusable class="max-w-lg">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">{{ __('Are you sure you want to delete this todo?') }}</flux:heading>
+                <flux:subheading>
+                    {{ __('This action cannot be undone. The todo and all its subtasks and attachments will be permanently deleted.') }}
+                </flux:subheading>
+            </div>
+
+            <div class="flex justify-end space-x-2 rtl:space-x-reverse">
+                <flux:modal.close>
+                    <flux:button variant="filled" wire:click="cancelDelete">{{ __('Cancel') }}</flux:button>
+                </flux:modal.close>
+
+                <flux:button variant="danger" wire:click="delete">{{ __('Delete') }}</flux:button>
+            </div>
+        </div>
+    </flux:modal>
 </div>

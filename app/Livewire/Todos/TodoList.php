@@ -18,6 +18,10 @@ class TodoList extends Component
 
     public string $search = '';
 
+    public bool $showDeleteModal = false;
+
+    public ?int $todoToDeleteId = null;
+
     public function render()
     {
         return view('livewire.todos.todo-list', [
@@ -50,13 +54,29 @@ class TodoList extends Component
         $subtask->update(['completed' => ! $subtask->completed]);
     }
 
-    public function delete(Todo $todo): void
+    public function confirmDelete(int $id): void
     {
-        if ($todo->user_id !== auth()->id()) {
+        $this->todoToDeleteId = $id;
+        $this->showDeleteModal = true;
+    }
+
+    public function delete(): void
+    {
+        $todo = Todo::find($this->todoToDeleteId);
+
+        if (! $todo || $todo->user_id !== auth()->id()) {
             return;
         }
 
         $todo->delete();
+        $this->showDeleteModal = false;
+        $this->todoToDeleteId = null;
         Flux::toast(variant: 'success', text: __('Todo deleted successfully.'));
+    }
+
+    public function cancelDelete(): void
+    {
+        $this->showDeleteModal = false;
+        $this->todoToDeleteId = null;
     }
 }
