@@ -9,7 +9,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
-#[Layout('layouts.app.sidebar')]
+#[Layout('layouts.auth')]
 #[Title('Change Password')]
 class ForcePasswordChange extends Component
 {
