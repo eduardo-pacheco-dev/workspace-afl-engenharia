@@ -27,6 +27,8 @@ class ForcePasswordChange extends Component
         $user->must_change_password = false;
         $user->save();
 
+        Auth::login($user);
+
         Flux::toast(variant: 'success', text: __('Password changed successfully.'));
 
         $this->redirectRoute('dashboard');
