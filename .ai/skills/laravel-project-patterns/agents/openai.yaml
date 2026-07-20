@@ -1,0 +1,9 @@
+interface:
+  display_name: 'Laravel Project Patterns'
+  short_description: 'Laravel project code and test patterns'
+  default_prompt: >-
+    Use $laravel-project-patterns before Laravel backend, project-supporting
+    PHP, Inertia Blade shell, React Email, schema, or test changes. Read the
+    exact touched files, then the path-matched reference and nearest sibling
+    modules; for controller tests, start with
+    references/tests/Feature/Http/Controllers/README.md.
