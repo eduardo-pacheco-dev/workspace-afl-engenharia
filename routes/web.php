@@ -9,4 +9,5 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/settings.php';
+require __DIR__.'/todos.php';
 require __DIR__.'/users.php';

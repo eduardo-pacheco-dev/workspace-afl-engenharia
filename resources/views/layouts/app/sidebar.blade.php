@@ -27,6 +27,7 @@
                         'name' => 'Management',
                         'items' => [
                             ['name' => 'Users', 'icon' => 'users', 'href' => route('users.index'), 'route' => 'users.*'],
+                            ['name' => 'Todos', 'icon' => 'check-circle', 'href' => route('todos.index'), 'route' => 'todos.*'],
                         ],
                     ],
                 ]" />
