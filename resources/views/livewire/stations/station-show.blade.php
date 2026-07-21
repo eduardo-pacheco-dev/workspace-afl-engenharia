@@ -189,6 +189,54 @@
         </div>
     </div>
 
+    <div class="relative overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
+        <div class="p-6">
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <flux:heading size="lg">{{ __('Comments') }}</flux:heading>
+                    <flux:text class="text-sm text-neutral-500 dark:text-neutral-400">
+                        {{ __(':count comment(s)', ['count' => $station->comments->count()]) }}
+                    </flux:text>
+                </div>
+
+                <div>
+                    <form wire:submit="addComment">
+                        <flux:textarea wire:model="newComment" :placeholder="__('Write a comment...')" rows="3" />
+                        <div class="mt-2 flex justify-end">
+                            <flux:button variant="primary" type="submit" size="sm">
+                                {{ __('Post') }}
+                            </flux:button>
+                        </div>
+                    </form>
+                </div>
+
+                @if ($station->comments->count() > 0)
+                    <div class="space-y-3">
+                        @foreach ($station->comments->sortByDesc('created_at') as $comment)
+                            <div class="rounded-lg border border-neutral-200 p-4 dark:border-neutral-700">
+                                <div class="flex items-start justify-between">
+                                    <div class="flex items-center gap-2">
+                                        <flux:avatar :initials="substr($comment->user->name ?? 'U', 0, 2)" class="size-8" />
+                                        <div>
+                                            <p class="text-sm font-medium">{{ $comment->user->name ?? __('Unknown') }}</p>
+                                            <p class="text-xs text-neutral-500 dark:text-neutral-400">{{ $comment->created_at->diffForHumans() }}</p>
+                                        </div>
+                                    </div>
+                                    @if ($comment->user_id === auth()->id())
+                                        <flux:button icon="trash" variant="ghost" size="sm" wire:click="deleteComment({{ $comment->id }})" wire:confirm="{{ __('Are you sure you want to delete this comment?') }}" aria-label="{{ __('Delete') }}" />
+                                    @endif
+                                </div>
+                                <p class="mt-2 text-sm whitespace-pre-wrap">{{ $comment->body }}</p>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <p class="text-sm text-neutral-500 dark:text-neutral-400">{{ __('No comments yet.') }}</p>
+                @endif
+            </div>
+        </div>
+    </div>
+
     <flux:modal name="preview-attachment" wire:model="showPreviewModal" class="max-w-[66vw]">
         <div class="space-y-4">
             <div class="flex items-center justify-between">

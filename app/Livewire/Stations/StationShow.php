@@ -26,9 +26,11 @@ class StationShow extends Component
     public string $previewFilename = '';
     public string $previewMime = '';
 
+    public string $newComment = '';
+
     public function mount(int $id): void
     {
-        $this->station = Station::with('attachments')->findOrFail($id);
+        $this->station = Station::with(['attachments', 'comments.user'])->findOrFail($id);
     }
 
     public function saveAttachments(): void
@@ -69,6 +71,32 @@ class StationShow extends Component
         $this->previewFilename = $filename;
         $this->previewMime = $mime;
         $this->showPreviewModal = true;
+    }
+
+    public function addComment(): void
+    {
+        $this->validate([
+            'newComment' => ['required', 'string', 'max:5000'],
+        ]);
+
+        $this->station->comments()->create([
+            'user_id' => auth()->id(),
+            'body' => $this->newComment,
+        ]);
+
+        $this->newComment = '';
+        $this->station->load('comments.user');
+        Flux::toast(variant: 'success', text: __('Comment added successfully.'));
+    }
+
+    public function deleteComment(int $commentId): void
+    {
+        $comment = $this->station->comments()->find($commentId);
+        if ($comment && $comment->user_id === auth()->id()) {
+            $comment->delete();
+            $this->station->load('comments.user');
+            Flux::toast(variant: 'success', text: __('Comment deleted successfully.'));
+        }
     }
 
     public function render()
