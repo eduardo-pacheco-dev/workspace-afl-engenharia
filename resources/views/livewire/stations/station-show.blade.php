@@ -107,6 +107,39 @@
     <div class="relative overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
         <div class="p-6">
             <div class="space-y-4">
+                <flux:heading size="lg">{{ __('Location') }}</flux:heading>
+
+                @if ($station->latitude && $station->longitude
+                    && $station->latitude >= -90 && $station->latitude <= 90
+                    && $station->longitude >= -180 && $station->longitude <= 180)
+                    <div id="station-map" class="h-[400px] w-full rounded-lg"></div>
+                    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+                    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+                    <script>
+                        document.addEventListener('livewire:initialized', function () {
+                            const map = L.map('station-map').setView([{{ $station->latitude }}, {{ $station->longitude }}], 15);
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                attribution: '&copy; OpenStreetMap contributors'
+                            }).addTo(map);
+                            L.marker([{{ $station->latitude }}, {{ $station->longitude }}])
+                                .addTo(map)
+                                .bindPopup('{{ $station->site_id }}')
+                                .openPopup();
+                        });
+                    </script>
+                @else
+                    <div class="flex flex-col items-center justify-center rounded-lg border border-dashed border-neutral-300 bg-neutral-50 py-12 dark:border-neutral-600 dark:bg-neutral-800/50">
+                        <flux:icon name="map-pin" class="size-10 text-neutral-400" />
+                        <p class="mt-2 text-sm text-neutral-500 dark:text-neutral-400">{{ __('No coordinates registered for this station.') }}</p>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <div class="relative overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-700">
+        <div class="p-6">
+            <div class="space-y-4">
                 <div class="flex items-center justify-between">
                     <flux:heading size="lg">{{ __('Attachments') }}</flux:heading>
                     <flux:text class="text-sm text-neutral-500 dark:text-neutral-400">
