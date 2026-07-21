@@ -33,7 +33,7 @@
                 @forelse ($stations as $station)
                     <flux:table.row>
                         <flux:table.cell class="px-8 py-5">
-                            <span class="font-medium">{{ $station->site_id }}</span>
+                            <a href="{{ route('stations.show', $station->id) }}" wire:navigate class="font-medium text-blue-600 hover:underline dark:text-blue-400">{{ $station->site_id }}</a>
                             @if ($station->description)
                                 <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">{{ Str::limit($station->description, 60) }}</p>
                             @endif
@@ -58,6 +58,7 @@
                         </flux:table.cell>
                         <flux:table.cell class="px-8 py-5">
                             <div class="flex items-center gap-2">
+                                <flux:button icon="eye" variant="ghost" size="sm" href="{{ route('stations.show', $station->id) }}" wire:navigate aria-label="{{ __('View') }}" />
                                 <flux:button icon="pencil-square" variant="ghost" size="sm" href="{{ route('stations.edit', $station->id) }}" wire:navigate aria-label="{{ __('Edit') }}" />
                                 <flux:button icon="trash" variant="ghost" size="sm" wire:click="confirmDelete({{ $station->id }})" aria-label="{{ __('Delete') }}" />
                             </div>

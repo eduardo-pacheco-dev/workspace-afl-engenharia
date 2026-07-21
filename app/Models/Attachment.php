@@ -23,7 +23,7 @@ class Attachment extends Model
     /** @use HasFactory<AttachmentFactory> */
     use HasFactory;
 
-    protected $fillable = ['todo_id', 'filename', 'path', 'mime_type', 'size'];
+    protected $fillable = ['todo_id', 'station_id', 'filename', 'path', 'mime_type', 'size'];
 
     protected function casts(): array
     {
@@ -35,6 +35,11 @@ class Attachment extends Model
     public function todo(): BelongsTo
     {
         return $this->belongsTo(Todo::class);
+    }
+
+    public function station(): BelongsTo
+    {
+        return $this->belongsTo(Station::class);
     }
 
     public function formattedSize(): string
