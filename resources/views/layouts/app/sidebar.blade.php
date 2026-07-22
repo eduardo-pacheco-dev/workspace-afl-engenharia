@@ -26,8 +26,8 @@
                     [
                         'name' => 'Projects',
                         'items' => [
-                            ['name' => 'ZTE Claro WL', 'icon' => 'folder', 'href' => route('projects.index'), 'route' => 'projects.*', 'params' => ['type' => 'zte_claro_wl']],
-                            ['name' => 'All Projects', 'icon' => 'folder-open', 'href' => route('projects.index'), 'route' => 'projects.*'],
+                            ['name' => 'ZTE Claro WL', 'icon' => 'folder', 'href' => route('projects.zte-claro-wl'), 'route' => 'projects.zte-claro-wl'],
+                            ['name' => 'All Projects', 'icon' => 'folder-open', 'href' => route('projects.index'), 'route' => 'projects.index'],
                         ],
                     ],
                     [

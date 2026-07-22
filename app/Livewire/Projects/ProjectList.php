@@ -37,6 +37,9 @@ class ProjectList extends Component
                 ->when($this->typeFilter !== 'all', fn ($query) => $query->where('type', $this->typeFilter))
                 ->orderByDesc('created_at')
                 ->paginate(10),
+            'statuses' => Project::statuses(),
+            'types' => Project::types(),
+            'operators' => Project::operators(),
         ]);
     }
 
