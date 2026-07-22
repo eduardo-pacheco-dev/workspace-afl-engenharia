@@ -13,14 +13,23 @@ use Livewire\Component;
 class FreelancerForm extends Component
 {
     public ?int $freelancerId = null;
+
     public string $name = '';
+
     public ?string $email = null;
+
     public ?string $phone = null;
+
     public ?string $cpf_cnpj = null;
+
     public ?string $specialization = null;
+
     public string $status = 'active';
+
     public ?float $hourly_rate = null;
+
     public ?string $address = null;
+
     public ?string $notes = null;
 
     public function mount(?int $id = null): void

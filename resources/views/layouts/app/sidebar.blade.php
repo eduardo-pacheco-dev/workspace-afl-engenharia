@@ -24,6 +24,13 @@
                         ],
                     ],
                     [
+                        'name' => 'Projects',
+                        'items' => [
+                            ['name' => 'ZTE Claro WL', 'icon' => 'folder', 'href' => route('projects.index'), 'route' => 'projects.*', 'params' => ['type' => 'zte_claro_wl']],
+                            ['name' => 'All Projects', 'icon' => 'folder-open', 'href' => route('projects.index'), 'route' => 'projects.*'],
+                        ],
+                    ],
+                    [
                         'name' => 'Management',
                         'items' => [
                             ['name' => 'Users', 'icon' => 'users', 'href' => route('users.index'), 'route' => 'users.*'],

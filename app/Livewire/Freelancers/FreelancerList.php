@@ -16,8 +16,11 @@ class FreelancerList extends Component
     use WithPagination;
 
     public string $search = '';
+
     public string $statusFilter = 'all';
+
     public bool $showDeleteModal = false;
+
     public ?int $freelancerToDeleteId = null;
 
     public function render()

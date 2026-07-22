@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Stations;
+namespace App\Livewire\Projects;
 
-use App\Models\Station;
+use App\Models\Project;
 use Flux\Flux;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
@@ -12,12 +12,12 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\WithFileUploads;
 
 #[Layout('layouts.app.sidebar')]
-#[Title('Station Details')]
-class StationShow extends Component
+#[Title('Project Details')]
+class ProjectShow extends Component
 {
     use WithFileUploads;
 
-    public ?Station $station = null;
+    public ?Project $project = null;
 
     /** @var array<int, TemporaryUploadedFile> */
     public array $newAttachments = [];
@@ -34,7 +34,7 @@ class StationShow extends Component
 
     public function mount(int $id): void
     {
-        $this->station = Station::with(['attachments', 'comments.user'])->findOrFail($id);
+        $this->project = Project::with(['attachments', 'comments.user'])->findOrFail($id);
     }
 
     public function saveAttachments(): void
@@ -44,8 +44,8 @@ class StationShow extends Component
         ]);
 
         foreach ($this->newAttachments as $file) {
-            $path = $file->store('stations', 'public');
-            $this->station->attachments()->create([
+            $path = $file->store('projects', 'public');
+            $this->project->attachments()->create([
                 'filename' => $file->getClientOriginalName(),
                 'path' => $path,
                 'mime_type' => $file->getMimeType(),
@@ -54,17 +54,17 @@ class StationShow extends Component
         }
 
         $this->newAttachments = [];
-        $this->station->load('attachments');
+        $this->project->load('attachments');
         Flux::toast(variant: 'success', text: __('Attachments uploaded successfully.'));
     }
 
     public function removeAttachment(int $attachmentId): void
     {
-        $attachment = $this->station->attachments()->find($attachmentId);
+        $attachment = $this->project->attachments()->find($attachmentId);
         if ($attachment) {
             Storage::disk('public')->delete($attachment->path);
             $attachment->delete();
-            $this->station->load('attachments');
+            $this->project->load('attachments');
             Flux::toast(variant: 'success', text: __('Attachment deleted successfully.'));
         }
     }
@@ -83,31 +83,32 @@ class StationShow extends Component
             'newComment' => ['required', 'string', 'max:5000'],
         ]);
 
-        $this->station->comments()->create([
+        $this->project->comments()->create([
             'user_id' => auth()->id(),
             'body' => $this->newComment,
         ]);
 
         $this->newComment = '';
-        $this->station->load('comments.user');
+        $this->project->load('comments.user');
         Flux::toast(variant: 'success', text: __('Comment added successfully.'));
     }
 
     public function deleteComment(int $commentId): void
     {
-        $comment = $this->station->comments()->find($commentId);
+        $comment = $this->project->comments()->find($commentId);
         if ($comment && $comment->user_id === auth()->id()) {
             $comment->delete();
-            $this->station->load('comments.user');
+            $this->project->load('comments.user');
             Flux::toast(variant: 'success', text: __('Comment deleted successfully.'));
         }
     }
 
     public function render()
     {
-        return view('livewire.stations.station-show', [
-            'statuses' => Station::statuses(),
-            'types' => Station::types(),
+        return view('livewire.projects.project-show', [
+            'statuses' => Project::statuses(),
+            'types' => Project::types(),
+            'operators' => Project::operators(),
         ]);
     }
 }

@@ -13,16 +13,27 @@ use Livewire\Component;
 class StationForm extends Component
 {
     public ?int $stationId = null;
+
     public string $site_id = '';
+
     public ?string $end_id = null;
+
     public ?string $operadora = null;
+
     public string $description = '';
+
     public string $address = '';
+
     public ?float $latitude = null;
+
     public ?float $longitude = null;
+
     public string $status = 'active';
+
     public ?string $type = null;
+
     public ?string $responsible = null;
+
     public ?string $phone = null;
 
     public function mount(?int $id = null): void
