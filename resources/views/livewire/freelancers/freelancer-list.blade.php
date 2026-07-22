@@ -33,7 +33,7 @@
                 @forelse ($freelancers as $freelancer)
                     <flux:table.row>
                         <flux:table.cell class="px-8 py-5">
-                            <span class="font-medium">{{ $freelancer->name }}</span>
+                            <a href="{{ route('freelancers.show', $freelancer->id) }}" wire:navigate class="font-medium text-blue-600 hover:underline dark:text-blue-400">{{ $freelancer->name }}</a>
                             @if ($freelancer->phone)
                                 <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">{{ $freelancer->phone }}</p>
                             @endif
